@@ -3,12 +3,12 @@ var router = express.Router();
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/";
 
-class Books {
+class Customers {
   constructor() {
 
   }
 
-  static viewBooks(req,res,next){
+  static viewCustomers(req,res,next){
     MongoClient.connect(url, function(err, db) {
       if (err){
         res.status(404).json({
@@ -16,14 +16,14 @@ class Books {
         })
       }
       let dbo = db.db("library");
-      dbo.collection("books").find({}).toArray(function(err, result) {
+      dbo.collection("customers").find({}).toArray(function(err, result) {
         if (err){
           res.status(400).json({
-            message:'error when reading books data'
+            message:'error when reading customers data'
           })
         } else {
           res.status(200).send({
-            message:'this is library booklist',
+            message:'this is library customers list',
             data:result
           })
         }
@@ -32,7 +32,7 @@ class Books {
     });
   }
 
-  static addBooks(req,res,next){
+  static addCustomers(req,res,next){
     MongoClient.connect(url, function(err, db) {
     if (err){
       res.status(404).json({
@@ -41,20 +41,20 @@ class Books {
     }
     var dbo = db.db("library");
     var myobj = {
-      isbn: req.body.isbn,
-      title: req.body.title,
-      author: req.body.author,
-      category : req.body.category,
-      stock : req.body.stock
+      name: req.body.name,
+      memberid: req.body.memberid,
+      address: req.body.address,
+      zipcode : req.body.zipcode,
+      phone : req.body.phone
     };
-    dbo.collection("books").insertOne(myobj, function(err, result){
+    dbo.collection("customers").insertOne(myobj, function(err, result){
       if (err){
         res.status(400).json({
-          message:'error when adding books'
+          message:'error when adding customer'
         })
       } else {
         res.status(200).json({
-          message:'successfully adding 1 books',
+          message:'successfully adding 1 customer',
           data:myobj
         })
       }
@@ -62,8 +62,8 @@ class Books {
       });
     });
   }
-
-  static updateBooks(req,res,next){
+  //
+  static updateCustomers(req,res,next){
     MongoClient.connect(url, function(err, db) {
       if (err){
         res.status(404).json({
@@ -71,18 +71,17 @@ class Books {
         })
       } else {
         var dbo = db.db("library");
-        var myquery = { title: req.body.titleSearch };
+        var myquery = { name: req.body.nameSearch };
         var newvalues = { $set:
           {
           name: req.body.name,
-          isbn: req.body.isbn,
-          title: req.body.title,
-          author:req.body.author,
-          category: req.body.category,
-          stock: req.body.stock
+          memberid: req.body.memberid,
+          address: req.body.address,
+          zipcode : req.body.zipcode,
+          phone : req.body.phone
           }
         };
-        dbo.collection("books").updateOne(myquery, newvalues, function(err, result) {
+        dbo.collection("customers").updateOne(myquery, newvalues, function(err, result) {
           if (err){
             res.status(404).json({
               message:'error when updating data'
@@ -98,8 +97,8 @@ class Books {
       }
     })
   }
-
-  static deleteBooks(req,res,next){
+  //
+  static deleteCustomers(req,res,next){
     MongoClient.connect(url, function(err, db) {
       if (err){
         res.status(404).json({
@@ -108,17 +107,16 @@ class Books {
       }
       var dbo = db.db("library");
       var myquery = {
-         title: req.body.title
+         name: req.body.name
        };
-      dbo.collection("books").deleteOne(myquery, function(err, obj) {
+      dbo.collection("customers").deleteOne(myquery, function(err, obj) {
         if (err){
           res.status(404).json({
             message:'error when deleting data'
           })
         } else {
           res.status(200).json({
-            message:'sucessfully deleting data',
-            data:obj
+            message:'sucessfully deleting data'
           })
           db.close();
         }
@@ -128,4 +126,4 @@ class Books {
 
 }
 
-module.exports = Books;
+module.exports = Customers;
