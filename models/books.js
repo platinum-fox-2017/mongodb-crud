@@ -12,7 +12,7 @@ module.exports = {
           client = await MongoClient.connect(url);
           const db = client.db(dbName);
           const docs = await db.collection('books').find({}).toArray();
-           resolve(docs) ;
+          resolve(docs) ;
 
         } catch (err) {
           console.log(err.stack);
@@ -58,6 +58,33 @@ module.exports = {
           });
           resolve(docs) ;
 
+        } catch (err) {
+          console.log(err.stack);
+          reject(err);
+        }
+        if (client) {
+          client.close();
+        }
+      })();
+    });
+  },
+  update: (id,input) => {
+    return new Promise(function(resolve, reject) {
+      (async function() {
+        try {
+          client = await MongoClient.connect(url);
+          const db = client.db(dbName);
+          const update = await db.collection('books').findOneAndUpdate({
+            _id: ObjectId(id)
+          },
+          { $set : input},
+          {
+             returnOriginal: false,
+             sort: [['_id',1]],
+             upsert: true
+           }
+          );
+          resolve(update.value);
         } catch (err) {
           console.log(err.stack);
           reject(err);
