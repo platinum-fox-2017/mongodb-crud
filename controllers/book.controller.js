@@ -6,6 +6,9 @@ module.exports ={
     showBook: (req, res)=>{
         Model.showBook(req, res)
     },
+    showBookById: (req, res)=>{
+        Model.showBookById(req, res)
+    },
     addBook:(req, res)=>{
         Model.addBook(req,res)
     },

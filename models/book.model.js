@@ -19,6 +19,23 @@ module.exports ={
             })
         })
     },
+    showBookById: (req, res)=>{
+        MongoClient.connect(url, (err,client)=>{
+            if (err) return res.status(500).send(err)
+            const db = client.db('library')
+            db.collection("books").findOne({title:req.params.titleBook},(err, result)=>{
+                if(err){
+                    return res.status(500).send('error')
+                }else{
+                    return res.status(200).send({
+                        message : 'show all data',
+                        result:result
+                    })
+                }
+                db.close() 
+            })
+        })
+    },
     addBook:(req, res)=>{
         MongoClient.connect(url, (err, client)=>{
             if(err) return status(500).send('error')
