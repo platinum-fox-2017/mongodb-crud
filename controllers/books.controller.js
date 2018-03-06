@@ -4,6 +4,8 @@ const mongodb = require('mongodb');
 const mongoClient = mongodb.MongoClient;
 const url = 'mongodb://localhost:27017/';
 
+const model = require('../models/books.model');
+
 module.exports = {
     create: (req, res) => {
         const newBooks = {
@@ -32,17 +34,15 @@ module.exports = {
               })
         })
     },
+
     readAll: (req, res ) => {
-        mongoClient.connect(url, (err, client) => {
-            if(err) return res.status(500).send('error connecting to database');
-            const db = client.db('library');
-            db.collection('books')
-              .find({})
-              .toArray()
-              .then((response) => {
-                  return res.status(200).send(response);
+        model.findAll()
+              .then((data) => {
+                  return res.status(200).send(data)
               })
-        })
+              .catch((err) => {
+                  return res.status(500).send(err)
+              })  
     },
 
     updateOne: (req, res) => {
@@ -90,12 +90,18 @@ module.exports = {
             db.collection('books')
               .deleteOne(where)
               .then((response) => {
-                  if(response.n) {
-                      res.status(404).send('Book not found')
-                  } else {
                       res.status(200).send('Book deleted')
-                  }
               })
         })
+    },
+
+    getOne: (req, res) => {
+        model.findOne(req.params.isbn)
+             .then((book) => {
+                res.send(book)
+             })
+             .catch((err) => {
+                 res.send(err)
+             })
     }
 }
