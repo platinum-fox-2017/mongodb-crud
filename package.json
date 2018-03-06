@@ -1,0 +1,26 @@
+{
+  "name": "mongoose-crud",
+  "version": "1.0.0",
+  "description": "CRUD with Mongoose ODM",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haidarafif0809/mongoose-crud.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/haidarafif0809/mongoose-crud/issues"
+  },
+  "homepage": "https://github.com/haidarafif0809/mongoose-crud#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "mongodb": "^3.0.4",
+    "npm": "^5.7.1"
+  }
+}
