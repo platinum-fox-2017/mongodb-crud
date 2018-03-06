@@ -26,5 +26,19 @@ module.exports = {
         message: 'Something Went Wrong'
       });
     });
+  },
+  destroy: (req,res) => {
+    const id = req.params.id;
+    books.destroy(id).then((book) => {
+      res.status(200).json({
+        message: 'Success Delete a Book',
+        data: book
+      });
+    }).catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        message: 'Something Went Wrong'
+      });
+    });
   }
 };
