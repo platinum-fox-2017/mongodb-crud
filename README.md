@@ -1,8 +1,7 @@
 # mongodb-crud
 CRUD with MongoDB  
 
-``` bash
-List of books routes:
+##### List of books routes:
 
 |             Route           |  HTTP  |             Description               |
 | --------------------------- | ------ | ------------------------------------- |
@@ -11,8 +10,8 @@ List of books routes:
 | /api/books/                 | POST   | Create a books                        |
 | /api/books/:id              | DELETE | Delete a books                        |
 | /api/books/:id              | PUT    | Update a books with new data          |
-```
-## Usage
+
+##### Usage
 With only npm:
 ```
 npm install
