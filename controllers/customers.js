@@ -62,7 +62,7 @@ class Customers {
       });
     });
   }
-  //
+
   static updateCustomers(req,res,next){
     MongoClient.connect(url, function(err, db) {
       if (err){
@@ -71,7 +71,7 @@ class Customers {
         })
       } else {
         var dbo = db.db("library");
-        var myquery = { name: req.body.nameSearch };
+        var myquery = { name: req.params.name };
         var newvalues = { $set:
           {
           name: req.body.name,
@@ -107,7 +107,7 @@ class Customers {
       }
       var dbo = db.db("library");
       var myquery = {
-         name: req.body.name
+         name: req.params.name
        };
       dbo.collection("customers").deleteOne(myquery, function(err, obj) {
         if (err){

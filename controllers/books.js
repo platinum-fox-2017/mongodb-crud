@@ -71,7 +71,7 @@ class Books {
         })
       } else {
         var dbo = db.db("library");
-        var myquery = { title: req.body.titleSearch };
+        var myquery = { title: req.params.title };
         var newvalues = { $set:
           {
           name: req.body.name,
@@ -108,7 +108,7 @@ class Books {
       }
       var dbo = db.db("library");
       var myquery = {
-         title: req.body.title
+         title: req.params.title
        };
       dbo.collection("books").deleteOne(myquery, function(err, obj) {
         if (err){
