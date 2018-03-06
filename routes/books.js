@@ -5,7 +5,6 @@ const router = express.Router();
 /* GET users listing. */
 router.post('/add', BookController.createBook);
 
-
 router.get('/library', BookController.readBook);
 router.get('/library/:_id', BookController.readOneBook);
 
